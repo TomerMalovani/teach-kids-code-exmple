@@ -1,0 +1,187 @@
+:root {
+  --ROWS:11;
+  --COLS: 11;
+}
+
+@keyframes colorChange {
+	0% {
+		background:linear-gradient(45deg, #f00, #ff0);
+	}
+
+	10% {
+		background:linear-gradient(45deg, #f00, #ff0, #0f0);
+	}
+
+	20% {
+		background:linear-gradient(45deg, #f00, #ff0, #0f0, #0ff);
+	}
+		30% {
+			background: linear-gradient(45deg, #f00, #ff0, #0f0, #0ff, #00f);
+		}
+		40% {
+			background: linear-gradient(45deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f);
+		}
+			50% {
+				background: linear-gradient(225deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+			}
+				60% {
+					background: linear-gradient(225deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f);
+				}
+		70% {
+			background: linear-gradient(225deg,#00f
+			#0ff,
+			#0f0,
+			#ff0,
+			#f00);
+		}
+
+	80% {
+		background: linear-gradient(225deg, #0ff,
+	
+		#0f0,
+		#ff0,
+		#f00);
+	}
+
+		90% {
+			background: linear-gradient(225deg,
+			
+			#0f0,
+			#ff0,
+			#f00);
+		}
+100% {
+	background: linear-gradient(225deg,#ff0,
+	#f00);
+}
+
+
+}
+
+body{
+	background-color: grey;
+		/* width: 100vw; */
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+			/* animation-name:colorChange; */
+animation-iteration-count: infinite;
+animation-duration: 1s;
+
+
+}
+
+
+.wrapper{
+	padding: 1%;
+	display: grid;
+	grid-template-columns: repeat(var(--COLS), 1fr);
+	grid-template-rows: repeat(var(--ROWS), 1fr);
+	border: 2px solid black;
+	border-radius: 16px;
+	box-sizing: border-box;
+	/* margin: auto; */
+	/* width: 50%; */
+	/* height: 70%;  */
+	flex: 1;
+
+}
+
+
+.container{
+	display: flex;
+	flex-direction: row;
+	/* display: grid;
+	grid-template-columns: repeat(var(--COLS), 1fr);
+	grid-template-rows: repeat(var(--ROWS), 1fr);
+	border: 2px solid black;
+	border-radius: 5px;
+	margin: auto; */
+	 width: 50%;
+	height: 80%;  
+}
+
+.roundShape{
+	background-color: rgb(75, 75, 75);
+	width: 50%;
+	height: 50%;
+	margin:auto;
+	border: 2px dashed black;
+	border-radius: 50px;
+}
+
+/* grid class for cell divs 30x30*/
+.cell{
+	background-color: rgb(75, 75, 75);
+	width: 100%;
+	height: 100%;
+	border: 2px solid black;
+	border-radius: 5px;
+	margin: auto;
+	text-align: center;
+}
+
+.cell:hover{
+	background-color: rgb(100, 100, 100);
+	cursor: pointer;
+}
+
+.painted{
+	background-color: rgb(36, 32, 32);
+}
+
+.win{
+		background-color: green;
+
+}
+
+.colorbtn{
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	margin-top: 30px;
+}
+
+.colorbtn:hover{
+	/* same color with a bit over shade over it */
+	border: 2px solid black;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.colorbtn:focus{
+		border: 2px solid black;
+		box-sizing: border-box;
+
+}
+
+.yellow{
+	background-color: yellow;
+}
+.brown{
+	background-color: rgb(167, 148, 122);
+}
+.black{
+	background-color: black
+}
+.red{
+	background-color: red;
+}
+
+.questions{
+	text-align: center;
+	/* make big and nice text in center */
+	font-size: 2em;
+	font-family: 'Roboto', sans-serif;
+	font-weight: bold;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: grey;
+	width: 30%;
+	
+	border: 1px solid red;
+}
+

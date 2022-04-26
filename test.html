@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./style.css">
+	<style>
+		:root {
+  --ROWS:20;
+  --COLS: 20;
+}
+
+body{
+	background-color: grey;
+		width: 100vw;
+	height: 100vh;
+}
+
+.container{
+
+	display: grid;
+	grid-template-columns: repeat(var(--COLS), 1fr);
+	grid-template-rows: repeat(var(--ROWS), 1fr);
+	border: 2px solid black;
+	border-radius: 5px;
+	margin: auto;
+	width: 80%;
+	height: 80%;
+}
+
+.roundShape{
+	background-color: rgb(75, 75, 75);
+	width: 50%;
+	height: 50%;
+	margin:auto;
+	border: 2px dashed black;
+	border-radius: 50px;
+}
+
+/* grid class for cell divs 30x30*/
+.cell{
+	background-color: rgb(75, 75, 75);
+	width: 100%;
+	height: 100%;
+	border: 2px solid black;
+	border-radius: 5px;
+	margin: auto;
+	text-align: center;
+}
+
+.cell:hover{
+	background-color: rgb(100, 100, 100);
+	cursor: pointer;
+}
+
+.painted{
+	background-color: rgb(36, 32, 32);
+}
+
+.win{
+		background-color: green;
+
+}
+
+.colorbtn{
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	margin-top: 30px;
+}
+
+.colorbtn:hover{
+	/* same color with a bit over shade over it */
+	border: 2px solid black;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.colorbtn:focus{
+		border: 2px solid black;
+		box-sizing: border-box;
+
+}
+
+.yellow{
+	background-color: yellow;
+}
+.brown{
+	background-color: rgb(167, 148, 122);
+}
+.black{
+	background-color: black
+}
+.red{
+	background-color: red;
+}
+	</style>
+	<title>Document</title>
+</head>
+
+<body>
+	<div class="container">
+
+
+	</div>
+	<button id="saveBtn">save me</button>
+	<button id="solveBtn">solve</button>
+
+	<script>
+		const ROWS = 20;
+			const COLS = 20;
+
+
+			let toWinCell = [
+				["2", "2", "black"],
+				["2", "3", "black"],
+				["2", "4", "black"],
+				["2", "5", "black"],
+				["3", "2", "black"],
+				["3", "3", "yellow"],
+				["3", "4", "black"],
+				["3", "5", "red"],
+				["3", "6", "black"],
+				["3", "7", "black"],
+				["3", "8", "black"],
+				["3", "9", "black"],
+				["4", "2", "black"],
+				["4", "3", "yellow"],
+				["4", "4", "black"],
+				["4", "5", "red"],
+				["4", "6", "red"],
+				["4", "7", "black"],
+				["4", "8", "yellow"],
+				["4", "9", "yellow"],
+				["4", "10", "black"],
+				["4", "11", "black"],
+				["4", "12", "black"],
+				["4", "13", "black"],
+				["5", "2", "black"],
+				["5", "3", "yellow"],
+				["5", "4", "yellow"],
+				["5", "5", "black"],
+				["5", "6", "black"],
+				["5", "7", "yellow"],
+				["5", "8", "yellow"],
+				["5", "9", "yellow"],
+				["5", "10", "yellow"],
+				["5", "11", "yellow"],
+				["5", "12", "yellow"],
+				["5", "13", "yellow"],
+				["5", "14", "black"],
+				["5", "15", "black"],
+				["5", "16", "black"],
+				["6", "3", "black"],
+				["6", "4", "yellow"],
+				["6", "5", "yellow"],
+				["6", "6", "yellow"],
+				["6", "7", "yellow"],
+				["6", "8", "yellow"],
+				["6", "9", "yellow"],
+				["6", "10", "black"],
+				["6", "11", "black"],
+				["6", "12", "yellow"],
+				["6", "13", "yellow"],
+				["6", "14", "black"],
+				["6", "15", "rgb(167, 148, 122)"],
+				["6", "16", "black"],
+				["7", "3", "black"],
+				["7", "4", "yellow"],
+				["7", "5", "yellow"],
+				["7", "6", "yellow"],
+				["7", "7", "yellow"],
+				["7", "8", "yellow"],
+				["7", "9", "black"],
+				["7", "10", "red"],
+				["7", "11", "red"],
+				["7", "12", "black"],
+				["7", "13", "yellow"],
+				["7", "14", "black"],
+				["7", "15", "rgb(167, 148, 122)"],
+				["7", "16", "black"],
+				["8", "3", "black"],
+				["8", "4", "yellow"],
+				["8", "5", "yellow"],
+				["8", "6", "yellow"],
+				["8", "7", "yellow"],
+				["8", "8", "yellow"],
+				["8", "9", "black"],
+				["8", "10", "red"],
+				["8", "11", "red"],
+				["8", "12", "black"],
+				["8", "13", "black"],
+				["8", "14", "rgb(167, 148, 122)"],
+				["8", "15", "rgb(167, 148, 122)"],
+				["8", "16", "black"],
+				["9", "3", "black"],
+				["9", "4", "yellow"],
+				["9", "5", "black"],
+				["9", "6", "black"],
+				["9", "7", "yellow"],
+				["9", "8", "yellow"],
+				["9", "9", "yellow"],
+				["9", "10", "black"],
+				["9", "11", "black"],
+				["9", "12", "yellow"],
+				["9", "13", "black"],
+				["9", "14", "rgb(167, 148, 122)"],
+				["9", "15", "black"],
+				["10", "4", "black"],
+				["10", "5", "red"],
+				["10", "6", "red"],
+				["10", "7", "black"],
+				["10", "8", "yellow"],
+				["10", "9", "yellow"],
+				["10", "10", "yellow"],
+				["10", "11", "yellow"],
+				["10", "12", "black"],
+				["10", "13", "rgb(167, 148, 122)"],
+				["10", "14", "rgb(167, 148, 122)"],
+				["10", "15", "black"],
+				["11", "4", "black"],
+				["11", "5", "red"],
+				["11", "6", "red"],
+				["11", "7", "black"],
+				["11", "8", "yellow"],
+				["11", "9", "yellow"],
+				["11", "10", "yellow"],
+				["11", "11", "black"],
+				["11", "12", "rgb(167, 148, 122)"],
+				["11", "13", "rgb(167, 148, 122)"],
+				["11", "14", "black"],
+				["12", "4", "black"],
+				["12", "5", "black"],
+				["12", "6", "black"],
+				["12", "7", "yellow"],
+				["12", "8", "yellow"],
+				["12", "9", "yellow"],
+				["12", "10", "black"],
+				["12", "11", "rgb(167, 148, 122)"],
+				["12", "12", "rgb(167, 148, 122)"],
+				["12", "13", "black"],
+				["13", "4", "black"],
+				["13", "5", "yellow"],
+				["13", "6", "yellow"],
+				["13", "7", "yellow"],
+				["13", "8", "black"],
+				["13", "9", "black"],
+				["13", "10", "rgb(167, 148, 122)"],
+				["13", "11", "rgb(167, 148, 122)"],
+				["13", "12", "black"],
+				["14", "5", "black"],
+				["14", "6", "black"],
+				["14", "7", "black"],
+				["14", "8", "rgb(167, 148, 122)"],
+				["14", "9", "rgb(167, 148, 122)"],
+				["14", "10", "rgb(167, 148, 122)"],
+				["14", "11", "black"],
+				["15", "5", "black"],
+				["15", "6", "rgb(167, 148, 122)"],
+				["15", "7", "rgb(167, 148, 122)"],
+				["15", "8", "rgb(167, 148, 122)"],
+				["15", "9", "black"],
+				["15", "10", "black"],
+				["16", "5", "black"],
+				["16", "6", "black"],
+				["16", "7", "black"],
+				["16", "8", "black"]]
+
+
+			//function that contact to body array of 30x30 div elements
+			var body = document.querySelector(".container");
+			//function that creates 30x30 div elements
+
+			let paintColor = "rgb(75, 75, 75)";
+
+			function changeColor(color) {
+				if (color === "brown")
+					paintColor = "rgb(167, 148, 122)";
+				else
+					paintColor = color;
+
+			}
+
+			function createDivs() {
+				let cells = []
+				console.log("test")
+				for (var i = 0; i < COLS; i++) {
+					for (var j = 0; j < ROWS; j++) {
+						var div = document.createElement("div");
+						cells.push(div);
+						div.className = "cell";
+						div.textContent = `[${i},${j}]`;
+						div.setAttribute("x", `${i}`);
+						div.setAttribute("y", `${j}`);
+
+						body.appendChild(div);
+					}
+				}
+				// create 3 divs and add id to them "yellow","brown","red". append to body
+				let divs = ["yellow", "brown", "red", "black"];
+				divs.forEach(function (div) {
+					var newDiv = document.createElement("button");
+					newDiv.className = `colorbtn ${div}`;
+
+					// newDiv.textContent = div;
+					body.appendChild(newDiv);
+					newDiv.addEventListener("click", () => changeColor(div));
+				});
+			}
+
+			function addEventListenerToDivs() {
+				let cells = document.querySelectorAll(".cell");
+
+				let activeCell = [];
+				// toWinCell = [["2", "3"], ["2", "9"], ["3", "4"], ["3", "8"], ["4", "3"], ["4", "4"], ["4", "5"], ["4", "6"], ["4", "7"], ["4", "8"], ["4", "9"], ["5", "2"], ["5", "3"], ["5", "5"], ["5", "6"], ["5", "7"], ["5", "9"], ["5", "10"], ["6", "1"], ["6", "2"], ["6", "3"], ["6", "4"], ["6", "5"], ["6", "6"], ["6", "7"], ["6", "8"], ["6", "9"], ["6", "10"], ["6", "11"], ["7", "1"], ["7", "3"], ["7", "4"], ["7", "5"], ["7", "6"], ["7", "7"], ["7", "8"], ["7", "9"], ["7", "11"], ["8", "1"], ["8", "3"], ["8", "9"], ["8", "11"], ["9", "4"], ["9", "5"], ["9", "7"], ["9", "8"]]
+
+				for (var i = 0; i < cells.length; i++) {
+					cells[i].addEventListener("click", function () {
+						if (this.classList.contains("painted")) {
+							this.classList.toggle("painted");
+							this.style.backgroundColor = "rgb(75, 75, 75)";
+							paintColor = "rgb(36, 32, 32)";
+						} else {
+							this.classList.toggle("painted");
+							this.style.backgroundColor = paintColor;
+							paintColor = "rgb(36, 32, 32)";
+
+						}
+						let painted = document.querySelectorAll(".painted");
+						// check if painted cells x and y coordinates are in toWinCell array with foreach
+						painted.forEach(function (cell) {
+							let x = cell.getAttribute("x");
+							let y = cell.getAttribute("y");
+							// let color=cell.classList[2];
+							color = "red"
+							console.log(x, y)
+							toWinCell.forEach(answer => answer[0] == x && answer[1] == y ? cell.style.backgroundColor = answer[2] : null);
+						}
+						)
+
+
+					});
+				}
+			}
+
+			function solveBtn() {
+				toWinCell.map((value, index, array) => {
+					let painted = document.querySelectorAll(".cell");
+					// check if painted cells x and y coordinates are in toWinCell array with foreach
+					painted.forEach(function (cell) {
+						let x = cell.getAttribute("x");
+						let y = cell.getAttribute("y");
+						// let color=cell.classList[2];
+						toWinCell.forEach(answer => answer[0] == x && answer[1] == y ? cell.style.backgroundColor = answer[2] : null);
+					})
+				})
+			}
+			// listen to saveBtn click and save in a array all x and y coordinates of painted cells
+			function saveBtn() {
+				let cells = document.querySelectorAll(".painted");
+				let paintedCells = [];
+				for (var i = 0; i < cells.length; i++) {
+
+					paintedCells = [...paintedCells, [cells[i].getAttribute("x"), cells[i].getAttribute("y"), cells[i].style.backgroundColor]];
+
+				}
+				console.log(paintedCells);
+				// save all painted cells in log file
+				// save painted cells in local storage
+				localStorage.setItem("paintedCells", JSON.stringify(paintedCells));
+			}
+
+
+			document.getElementById("saveBtn").addEventListener("click", saveBtn);
+			document.getElementById("solveBtn").addEventListener("click", solveBtn);
+			createDivs();
+			addEventListenerToDivs();
+
+		
+
+	</script>
+</body>
+
+</html>
